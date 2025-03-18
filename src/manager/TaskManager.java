@@ -1,3 +1,10 @@
+package manager;
+
+import task.Epic;
+import task.Subtask;
+import task.Task;
+import task.TaskStatus;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -9,7 +16,7 @@ public class TaskManager {
     private Map<Integer, Subtask> subtasks = new HashMap<>();
     private int nextId = 1;
 
-    // Методы для задач (Task)
+    // Методы для задач (task.Task)
     public List<Task> getAllTasks() {
         return new ArrayList<>(tasks.values());
     }
@@ -37,7 +44,7 @@ public class TaskManager {
         tasks.remove(id);
     }
 
-    // Методы для эпиков (Epic)
+    // Методы для эпиков (task.Epic)
     public List<Epic> getAllEpics() {
         return new ArrayList<>(epics.values());
     }
@@ -59,7 +66,6 @@ public class TaskManager {
     public void updateEpic(Epic epic) {
         if (epics.containsKey(epic.getId())) {
             epics.put(epic.getId(), epic);
-            updateEpicStatus(epic);
         }
     }
 
@@ -72,7 +78,7 @@ public class TaskManager {
         }
     }
 
-    // Методы для подзадач (Subtask)
+    // Методы для подзадач (task.Subtask)
     public List<Subtask> getAllSubtasks() {
         return new ArrayList<>(subtasks.values());
     }
