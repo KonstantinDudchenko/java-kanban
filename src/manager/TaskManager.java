@@ -9,35 +9,35 @@ import java.util.List;
 public interface TaskManager {
 
     // Методы для задач (task.Task)
-    public List<Task> getAllTasks();
+    List<Task> getAllTasks();
 
-    public void deleteAllTasks();
+    void deleteAllTasks();
 
-    public Task getTask(int id);
+    Task getTask(int id);
 
-    public Task createTask(Task task);
+    Task createTask(Task task);
 
-    public void updateTask(Task task);
+    void updateTask(Task task);
 
-    public void deleteTask(int id);
+    void deleteTask(int id);
 
     // Методы для эпиков (task.Epic)
-    public List<Epic> getAllEpics();
+    List<Epic> getAllEpics();
 
-    public void deleteAllEpics();
+    void deleteAllEpics();
 
-    public Epic getEpic(int id);
+    Epic getEpic(int id);
 
-    public Epic createEpic(Epic epic);
+    Epic createEpic(Epic epic);
 
-    public void updateEpic(Epic epic);
+    void updateEpic(Epic epic);
 
-    public void deleteEpic(int id);
+    void deleteEpic(int id);
 
     // Методы для подзадач (task.Subtask)
-    public List<Subtask> getAllSubtasks();
+    List<Subtask> getAllSubtasks();
 
-    public void deleteAllSubtasks();
+    void deleteAllSubtasks();
 
     public Subtask getSubtask(int id);
 
@@ -50,4 +50,6 @@ public interface TaskManager {
     //a. Получение списка всех подзадач определённого эпика.
 
     public List<Subtask> getSubtasksByEpicId(int epicId);
+
+    List<Task> getHistory();
 }
