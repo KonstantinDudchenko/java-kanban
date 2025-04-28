@@ -3,7 +3,6 @@ import task.Epic;
 import task.Subtask;
 import task.Task;
 
-import java.util.LinkedHashMap;
 import java.util.List;
 
 public class Main {
@@ -81,8 +80,7 @@ public class Main {
     private static String taskToString(Task task) {
         if (task instanceof Epic) {
             return "Эпик: " + task.getDescription() + " (ID: " + task.getId() + ")";
-        } else if (task instanceof Subtask) {
-            Subtask subtask = (Subtask) task;
+        } else if (task instanceof Subtask subtask) {
             return "Подзадача: " + subtask.getDescription() + " (ID: " + subtask.getId() +
                     ", Эпик ID: " + subtask.getEpicId() + ")";
         } else {

@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import task.Task;
 
 import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class InMemoryHistoryManagerTest {
@@ -22,7 +23,7 @@ class InMemoryHistoryManagerTest {
 
         List<Task> history = historyManager.getHistory();
         assertEquals(1, history.size());
-        assertEquals(task, history.get(0));
+        assertEquals(task, history.getFirst());
     }
 
     @Test
@@ -58,7 +59,7 @@ class InMemoryHistoryManagerTest {
 
         List<Task> history = historyManager.getHistory();
         assertEquals(1, history.size());
-        assertEquals(task2, history.get(0));
+        assertEquals(task2, history.getFirst());
     }
 
     @Test
@@ -114,7 +115,7 @@ class InMemoryHistoryManagerTest {
 
         List<Task> history = historyManager.getHistory();
         assertEquals(1, history.size());
-        assertEquals(task2, history.get(0));
+        assertEquals(task2, history.getFirst());
     }
 
     @Test
@@ -128,7 +129,7 @@ class InMemoryHistoryManagerTest {
 
         List<Task> history = historyManager.getHistory();
         assertEquals(1, history.size());
-        assertEquals(task1, history.get(0));
+        assertEquals(task1, history.getFirst());
     }
 
     @Test
