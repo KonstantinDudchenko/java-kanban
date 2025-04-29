@@ -1,5 +1,6 @@
 package manager;
 
+import task.Epic;
 import task.Task;
 
 import java.util.*;
@@ -24,9 +25,25 @@ public class InMemoryHistoryManager implements HistoryManager {
     @Override
     public void remove(int id) {
         Node node = taskMap.get(id);
-        if (node != null) {
-            removeNode(node);
-            taskMap.remove(id);
+        if (node == null) {
+            return;
+        }
+
+        switch (node.task.getType()) {
+            case TASK, SUBTASK:
+                removeNode(node);
+                taskMap.remove(id);
+                break;
+
+            case EPIC:
+                Epic epic = (Epic) node.task;
+                for (Integer i : epic.getSubtaskIds()) {
+                    removeNode(taskMap.get(i));
+                    taskMap.remove(i);
+                }
+                removeNode(node);
+                taskMap.remove(id);
+                break;
         }
     }
 
@@ -56,6 +73,9 @@ public class InMemoryHistoryManager implements HistoryManager {
     }
 
     private void removeNode(Node node) {
+        if (node == null) {
+            return;
+        }
         if (node.prev != null) {
             node.prev.next = node.next;
         } else {

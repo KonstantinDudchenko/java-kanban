@@ -1,6 +1,8 @@
 package manager;
 
 import org.junit.jupiter.api.Test;
+import task.Epic;
+import task.Subtask;
 import task.Task;
 
 import java.util.List;
@@ -8,7 +10,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class InMemoryHistoryManagerTest {
-    private final HistoryManager historyManager = new InMemoryHistoryManager();
+    private final HistoryManager historyManager = Managers.getDefaultHistory();
 
     private Task createTestTask(int id) {
         Task task = new Task("Task", "Desc");
@@ -147,5 +149,28 @@ class InMemoryHistoryManagerTest {
         assertEquals(2, history.size());
         assertEquals(task1, history.get(0));
         assertEquals(task3, history.get(1));
+    }
+
+    @Test
+    void shouldRemoveSubtasksWithEpic() {
+        Epic epic = new Epic("Epic1", "EpicDecsr");
+        epic.setId(1);
+        Subtask st1 = new Subtask("Subtask1", "SubtaskDescr1", 1);
+        st1.setId(2);
+        Subtask st2 = new Subtask("Subtask1", "SubtaskDescr2", 1);
+        st2.setId(3);
+        epic.addSubtask(2);
+        epic.addSubtask(3);
+
+        historyManager.add(st1);
+        historyManager.add(st2);
+        historyManager.add(epic);
+
+        List<Task> history = historyManager.getHistory();
+        assertEquals(3, history.size());
+
+        historyManager.remove(1);
+        List<Task> history2 = historyManager.getHistory();
+        assertTrue(history2.isEmpty());
     }
 }

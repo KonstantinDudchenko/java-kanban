@@ -59,6 +59,11 @@ public class Main {
         printHistory(taskManager);
 
         System.out.println("\n=== Удаление эпика с подзадачами ===");
+        taskManager.getSubtask(subtask1.getId());
+        taskManager.getSubtask(subtask2.getId());
+        taskManager.getSubtask(subtask3.getId());
+        printHistory(taskManager);
+
         System.out.println("Удаляем Эпик 1 (с тремя подзадачами)");
         taskManager.deleteEpic(epic1.getId());
         printHistory(taskManager);
@@ -71,24 +76,16 @@ public class Main {
             System.out.println("История пуста");
         } else {
             for (Task task : history) {
-                System.out.println("- " + taskToString(task));
+                System.out.println("- " + task.toString());
             }
         }
         System.out.println("Проверка дубликатов: " + (hasDuplicates(history) ? "есть дубликаты!" : "дубликатов нет"));
     }
 
-    private static String taskToString(Task task) {
-        if (task instanceof Epic) {
-            return "Эпик: " + task.getDescription() + " (ID: " + task.getId() + ")";
-        } else if (task instanceof Subtask subtask) {
-            return "Подзадача: " + subtask.getDescription() + " (ID: " + subtask.getId() +
-                    ", Эпик ID: " + subtask.getEpicId() + ")";
-        } else {
-            return "Задача: " + task.getDescription() + " (ID: " + task.getId() + ")";
-        }
-    }
-
     private static boolean hasDuplicates(List<Task> history) {
-        return history.stream().map(Task::getId).distinct().count() != history.size();
+        return history.stream()
+                .map(Task::getId)
+                .distinct()
+                .count() != history.size();
     }
 }

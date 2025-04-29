@@ -54,6 +54,7 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public void deleteTask(int id) {
         tasks.remove(id);
+        historyManager.remove(id);
     }
 
     // Методы для эпиков (task.Epic)
@@ -99,6 +100,7 @@ public class InMemoryTaskManager implements TaskManager {
                 subtasks.remove(subtaskId);
             }
         }
+        historyManager.remove(id);
     }
 
     // Методы для подзадач (task.Subtask)
@@ -168,6 +170,7 @@ public class InMemoryTaskManager implements TaskManager {
                 updateEpicStatus(epic);
             }
         }
+        historyManager.remove(id);
     }
 
     @Override
