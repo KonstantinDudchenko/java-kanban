@@ -155,9 +155,9 @@ class InMemoryHistoryManagerTest {
     void shouldRemoveSubtasksWithEpic() {
         Epic epic = new Epic("Epic1", "EpicDecsr");
         epic.setId(1);
-        Subtask st1 = new Subtask("Subtask1", "SubtaskDescr1", 1);
+        Subtask st1 = new Subtask("Subtask1", "SubtaskDescr1");
         st1.setId(2);
-        Subtask st2 = new Subtask("Subtask1", "SubtaskDescr2", 1);
+        Subtask st2 = new Subtask("Subtask1", "SubtaskDescr2");
         st2.setId(3);
         epic.addSubtask(2);
         epic.addSubtask(3);

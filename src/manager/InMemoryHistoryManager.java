@@ -14,7 +14,6 @@ public class InMemoryHistoryManager implements HistoryManager {
     public void add(Task task) {
         if (task == null) return;
 
-        // Удаляем существующую задачу, если она есть
         remove(task.getId());
 
         Node newNode = new Node(task);
@@ -64,10 +63,10 @@ public class InMemoryHistoryManager implements HistoryManager {
 
     private ArrayList<Task> getTasks() {
         ArrayList<Task> history = new ArrayList<>();
-        Node current = head;
+        Node current = tail;
         while (current != null) {
             history.add(current.task);
-            current = current.next;
+            current = current.prev;
         }
         return history;
     }
@@ -88,7 +87,6 @@ public class InMemoryHistoryManager implements HistoryManager {
             tail = node.prev;
         }
 
-        // Очищаем ссылки для помощи сборщику мусора
         node.prev = null;
         node.next = null;
     }
