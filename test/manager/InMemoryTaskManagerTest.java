@@ -75,9 +75,8 @@ class InMemoryTaskManagerTest {
         Subtask invalidSubtask = new Subtask("Invalid", "Description");
         invalidSubtask.setId(newEpic.getId());
 
-        Subtask subtaskWithRightId = taskManager.addSubtask(invalidSubtask);
+        assertThrows(IllegalArgumentException.class, () -> taskManager.addSubtask(invalidSubtask));
 
-        assertNotEquals(subtaskWithRightId.getEpicId(), subtaskWithRightId.getId(), "ID не должны совпадать");
     }
 
     // проверьте, что объект Subtask нельзя сделать своим же эпиком

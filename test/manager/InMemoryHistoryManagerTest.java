@@ -46,8 +46,8 @@ class InMemoryHistoryManagerTest {
 
         List<Task> history = historyManager.getHistory();
         assertEquals(2, history.size());
-        assertEquals(task2, history.get(0));
-        assertEquals(task1Updated, history.get(1));
+        assertEquals(task2, history.get(1));
+        assertEquals(task1Updated, history.get(0));
     }
 
     @Test
@@ -90,9 +90,9 @@ class InMemoryHistoryManagerTest {
 
         List<Task> history = historyManager.getHistory();
         assertEquals(3, history.size());
-        assertEquals(task1, history.get(0));
+        assertEquals(task1, history.get(2));
         assertEquals(task2, history.get(1));
-        assertEquals(task3, history.get(2));
+        assertEquals(task3, history.get(0));
     }
 
     @Test
@@ -147,8 +147,8 @@ class InMemoryHistoryManagerTest {
 
         List<Task> history = historyManager.getHistory();
         assertEquals(2, history.size());
-        assertEquals(task1, history.get(0));
-        assertEquals(task3, history.get(1));
+        assertEquals(task1, history.get(1));
+        assertEquals(task3, history.get(0));
     }
 
     @Test
