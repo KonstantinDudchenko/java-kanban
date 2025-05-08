@@ -1,7 +1,11 @@
 package manager;
 
 import exceptions.ManagerSaveException;
-import task.*;
+import task.Epic;
+import task.Subtask;
+import task.Task;
+import task.TaskStatus;
+import task.TaskType;
 
 import java.io.File;
 import java.io.IOException;
@@ -12,6 +16,7 @@ import java.util.List;
 public class FileBackedTaskManager extends InMemoryTaskManager {
 
     private final File file;
+    private final String TASK_FIELDS = "id,type,name,status,description,epic";
 
     public FileBackedTaskManager(File file) {
         this.file = file;
@@ -20,7 +25,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
     private void save() {
         try {
             List<String> lines = new ArrayList<>();
-            lines.add("id,type,name,status,description,epic");  // Заголовок CSV
+            lines.add(TASK_FIELDS);  // Заголовок CSV
 
             for (Task task : getAllTasks()) {
                 lines.add(task.toString());
@@ -35,8 +40,8 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
             }
 
             Files.write(file.toPath(), lines);
-        } catch (IOException e) {
-            throw new ManagerSaveException("Ошибка сохранения в файл", e);
+        } catch (IOException exception) {
+            throw new ManagerSaveException("Ошибка сохранения в файл", exception);
         }
     }
 
@@ -66,8 +71,8 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
                     }
                 }
             }
-        } catch (IOException e) {
-            throw new ManagerSaveException("Ошибка загрузки из файла", e);
+        } catch (IOException exception) {
+            throw new ManagerSaveException("Ошибка загрузки из файла", exception);
         }
         return fileBackedTaskManager;
     }

@@ -1,6 +1,8 @@
 package manager;
 
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import task.Epic;
 import task.Subtask;
 import task.Task;
@@ -10,7 +12,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class FileBackedTaskManagerTest {
 
