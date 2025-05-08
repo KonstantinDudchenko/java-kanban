@@ -15,7 +15,7 @@ public interface TaskManager {
 
     Task getTask(int id);
 
-    Task createTask(Task task);
+    Task addTask(Task task);
 
     void updateTask(Task task);
 
@@ -28,7 +28,7 @@ public interface TaskManager {
 
     Epic getEpic(int id);
 
-    Epic createEpic(Epic epic);
+    Epic addEpic(Epic epic);
 
     void updateEpic(Epic epic);
 
@@ -39,17 +39,17 @@ public interface TaskManager {
 
     void deleteAllSubtasks();
 
-    public Subtask getSubtask(int id);
+    Subtask getSubtask(int id);
 
-    public Subtask createSubtask(Subtask subtask);
+    Subtask addSubtask(Subtask subtask);
 
-    public void updateSubtask(Subtask subtask);
+    void updateSubtask(Subtask subtask);
 
-    public void deleteSubtask(int id);
+    void deleteSubtask(int id);
 
     //a. Получение списка всех подзадач определённого эпика.
 
-    public List<Subtask> getSubtasksByEpicId(int epicId);
+    List<Subtask> getSubtasksByEpicId(int epicId);
 
     List<Task> getHistory();
 }

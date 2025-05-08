@@ -7,31 +7,41 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
+
         TaskManager taskManager = Managers.getDefault();
 
         System.out.println("=== Создание задач ===");
         // Создаем две задачи
         Task task1 = new Task("Задача 1", "Описание задачи 1");
         Task task2 = new Task("Задача 2", "Описание задачи 2");
-        taskManager.createTask(task1);
-        taskManager.createTask(task2);
+        taskManager.addTask(task1);
+        taskManager.addTask(task2);
 
         // Создаем эпик с тремя подзадачами
         Epic epic1 = new Epic("Эпик 1", "Описание эпика 1");
-        taskManager.createEpic(epic1);
+        Epic newEpic = taskManager.addEpic(epic1);
 
-        Subtask subtask1 = new Subtask("Подзадача 1", "Описание подзадачи 1", epic1.getId());
-        Subtask subtask2 = new Subtask("Подзадача 2", "Описание подзадачи 2", epic1.getId());
-        Subtask subtask3 = new Subtask("Подзадача 3", "Описание подзадачи 3", epic1.getId());
-        taskManager.createSubtask(subtask1);
-        taskManager.createSubtask(subtask2);
-        taskManager.createSubtask(subtask3);
+        Subtask subtask1 = new Subtask("Подзадача 1", "Описание подзадачи 1");
+        Subtask subtask2 = new Subtask("Подзадача 2", "Описание подзадачи 2");
+        Subtask subtask3 = new Subtask("Подзадача 3", "Описание подзадачи 3");
+        subtask1.setEpicId(newEpic.getId());
+        subtask2.setEpicId(newEpic.getId());
+        subtask3.setEpicId(newEpic.getId());
+
+        taskManager.addSubtask(subtask1);
+        taskManager.addSubtask(subtask2);
+        taskManager.addSubtask(subtask3);
 
         // Создаем эпик без подзадач
         Epic epic2 = new Epic("Эпик 2", "Описание эпика 2");
-        taskManager.createEpic(epic2);
+        taskManager.addEpic(epic2);
 
         System.out.println("Все задачи созданы успешно!\n");
+
+        System.out.println(task1);
+        System.out.println(subtask1);
+        System.out.println(epic1);
+        System.out.println(epic2);
 
         System.out.println("=== Запрос задач в разном порядке ===");
         // Запрашиваем задачи в разном порядке
