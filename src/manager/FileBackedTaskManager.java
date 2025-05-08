@@ -16,7 +16,7 @@ import java.util.List;
 public class FileBackedTaskManager extends InMemoryTaskManager {
 
     private final File file;
-    private final static String TASK_FIELDS = "id,type,name,status,description,epic";
+    private static final String TASK_FIELDS = "id,type,name,status,description,epic";
 
     public FileBackedTaskManager(File file) {
         this.file = file;
