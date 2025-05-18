@@ -9,7 +9,10 @@ import task.TaskStatus;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class InMemoryTaskManagerTest {
 
@@ -31,12 +34,12 @@ class InMemoryTaskManagerTest {
 
         testEpic = new Epic("Test Epic", "Epic description");
 
-        testSubtask = new Subtask("Test Subtask", "Subtask description", 0);
+        testSubtask = new Subtask("Test Subtask", "Subtask description");
     }
 
     @Test
     void addNewTask() {
-        Task newTask = taskManager.createTask(testTask1);
+        Task newTask = taskManager.addTask(testTask1);
         Task savedTask = taskManager.getTask(newTask.getId());
 
         assertNotNull(savedTask, "Задача не найдена.");
@@ -70,14 +73,13 @@ class InMemoryTaskManagerTest {
     // проверьте, что объект Epic нельзя добавить в самого себя в виде подзадачи
     @Test
     void epicCannotBeItsOwnSubtask() {
-        taskManager.createEpic(testEpic);
+        Epic newEpic = taskManager.addEpic(testEpic);
 
-        Subtask invalidSubtask = new Subtask("Invalid", "Description", testEpic.getId());
-        invalidSubtask.setId(testEpic.getId());
+        Subtask invalidSubtask = new Subtask("Invalid", "Description");
+        invalidSubtask.setId(newEpic.getId());
 
-        Subtask subtaskWithRightId = taskManager.createSubtask(invalidSubtask);
+        assertThrows(IllegalArgumentException.class, () -> taskManager.addSubtask(invalidSubtask));
 
-        assertNotEquals(subtaskWithRightId.getEpicId(), subtaskWithRightId.getId(), "ID не должны совпадать");
     }
 
     // проверьте, что объект Subtask нельзя сделать своим же эпиком
@@ -94,10 +96,10 @@ class InMemoryTaskManagerTest {
     @Test
     void managerShouldStoreAndFindAllTaskTypes() {
 
-        taskManager.createTask(testTask1);
-        taskManager.createEpic(testEpic);
+        taskManager.addTask(testTask1);
+        taskManager.addEpic(testEpic);
         testSubtask.setEpicId(testEpic.getId());
-        taskManager.createSubtask(testSubtask);
+        taskManager.addSubtask(testSubtask);
 
         assertEquals(testTask1, taskManager.getTask(testTask1.getId()), "Должна находиться добавленная задача");
         assertEquals(testEpic, taskManager.getEpic(testEpic.getId()), "Должен находиться добавленный эпик");
@@ -108,7 +110,7 @@ class InMemoryTaskManagerTest {
     @Test
     void generatedAndManualIdsShouldNotConflict() {
         testSubtask.setId(100);
-        taskManager.createTask(testSubtask);
+        taskManager.addTask(testSubtask);
 
         assertNotEquals(100, testSubtask.getId(),
                 "ID назначается только менеджером, установка ID вручную игнорируется");
@@ -119,7 +121,7 @@ class InMemoryTaskManagerTest {
     @Test
     void taskShouldRemainUnchangedWhenAddedToManager() {
 
-        Task newTask = taskManager.createTask(testTask1);
+        Task newTask = taskManager.addTask(testTask1);
 
         assertEquals("Test Task 1", newTask.getName(), "Имя не должно изменяться");
         assertEquals("Task description", newTask.getDescription(), "Описание не должно изменяться");
@@ -128,7 +130,7 @@ class InMemoryTaskManagerTest {
 
     @Test
     void getHistory_ShouldReturnTaskViewHistory() {
-        taskManager.createTask(testTask1);
+        taskManager.addTask(testTask1);
 
         taskManager.getTask(testTask1.getId());
 
